@@ -1,4 +1,4 @@
-name: CI - Microservices E-Commerce
+name: CI/CD - Microservices E-Commerce
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  docker-compose-build:
+  validate-and-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -48,3 +48,53 @@ jobs:
 
       - name: Build containers
         run: docker compose build
+
+  dockerhub-push:
+    needs: validate-and-build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push web-ui
+        uses: docker/build-push-action@v6
+        with:
+          context: ./web-ui
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/web-ui:latest
+
+      - name: Build and push catalog-service
+        uses: docker/build-push-action@v6
+        with:
+          context: ./catalog-service
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/catalog-service:latest
+
+      - name: Build and push cart-service
+        uses: docker/build-push-action@v6
+        with:
+          context: ./cart-service
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/cart-service:latest
+
+      - name: Build and push checkout-service
+        uses: docker/build-push-action@v6
+        with:
+          context: ./checkout-service
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/checkout-service:latest
+
+      - name: Build and push orders-service
+        uses: docker/build-push-action@v6
+        with:
+          context: ./orders-service
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/orders-service:latest
