@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservices E-Commerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Microservices E-Commerce</h1>
+            <p>Catalogue, panier et commande</p>
+        </div>
+    </header>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-container">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="layout">
+            <section class="products-section">
+                <h2>Catalogue produits</h2>
+
+                <div class="products-grid">
+                    {% for product in products %}
+                    <div class="product-card">
+                        <div class="product-content">
+                            <h3>{{ product.name }}</h3>
+                            <p class="description">
+                                {{ product.description if product.description else "Produit disponible" }}
+                            </p>
+                            <p class="price">{{ product.price }} €</p>
+                            <p class="stock">Stock : {{ product.stock }}</p>
+                        </div>
+
+                        <form method="POST" action="/add-to-cart" class="product-form">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+                            <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <aside class="cart-section">
+                <h2>Panier</h2>
+
+                {% if cart["items"] and cart["items"]|length > 0 %}
+                    <div class="cart-list">
+                        {% for item in cart["items"] %}
+                        <div class="cart-item">
+                            <div>
+                                <p class="cart-item-title">{{ item.name }}</p>
+                                <p class="cart-item-subtitle">{{ item.quantity }} x {{ item.price }} €</p>
+                                <p><strong>{{ item.lineTotal }} €</strong></p>
+                            </div>
+
+                            <form method="POST" action="/remove-from-cart">
+                                <input type="hidden" name="product_id" value="{{ item.productId }}">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="cart-summary">
+                        <p><strong>Total estimé :</strong> {{ cart_total }} €</p>
+                    </div>
+
+                    <form method="POST" action="/checkout">
+                        <button type="submit" class="btn btn-success full-width">Passer la commande</button>
+                    </form>
+                {% else %}
+                    <div class="empty-cart">
+                        <p>Votre panier est vide.</p>
+                    </div>
+                {% endif %}
+            </aside>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
