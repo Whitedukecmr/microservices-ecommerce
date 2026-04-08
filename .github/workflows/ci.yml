@@ -1,0 +1,50 @@
+name: CI - Microservices E-Commerce
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-compose-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Create .env file
+        run: |
+          cat <<EOF > .env
+          MYSQL_DATABASE=catalog_db
+          MYSQL_USER=catalog_user
+          MYSQL_PASSWORD=catalog_pass
+          MYSQL_ROOT_PASSWORD=rootpass
+          POSTGRES_DB=orders_db
+          POSTGRES_USER=orders_user
+          POSTGRES_PASSWORD=orders_pass
+          RABBITMQ_DEFAULT_USER=guest
+          RABBITMQ_DEFAULT_PASS=guest
+          CATALOG_SERVICE_URL=http://catalog-service:8001
+          CART_SERVICE_URL=http://cart-service:8002
+          CHECKOUT_SERVICE_URL=http://checkout-service:8003
+          ORDERS_SERVICE_URL=http://orders-service:8004
+          REDIS_HOST=redis
+          REDIS_PORT=6379
+          DYNAMODB_ENDPOINT=http://dynamodb-local:8000
+          AWS_REGION=us-east-1
+          AWS_ACCESS_KEY_ID=fakeMyKeyId
+          AWS_SECRET_ACCESS_KEY=fakeSecretAccessKey
+          EOF
+
+      - name: Validate docker compose file
+        run: docker compose config
+
+      - name: Build containers
+        run: docker compose build
