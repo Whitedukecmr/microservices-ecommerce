@@ -1,0 +1,9 @@
+aws_region       = "eu-west-3"
+project_name     = "microservices-ecommerce"
+environment      = "dev"
+instance_type    = "t3.small"
+ssh_allowed_cidr = "0.0.0.0/0"
+app_allowed_cidr = "0.0.0.0/0"
+public_key_path  = "/home/fred/.ssh/id_ed25519.pub"
+key_name         = "microservices-ecommerce-key"
+root_volume_size = 30

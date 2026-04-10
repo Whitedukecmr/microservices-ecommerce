@@ -4,3 +4,9 @@ __pycache__/
 .venv/
 .idea/
 .vscode/
+
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+.env.prod
