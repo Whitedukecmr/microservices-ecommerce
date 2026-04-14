@@ -14,7 +14,8 @@ Projet personnel autour d’une application e-commerce basée sur une architectu
 
 ```mermaid
 flowchart TB
-    U[Utilisateur] --> DNS[DuckDNS]
+    INTERNET[Internet] --> EC2[AWS EC2]
+    EC2 --> DNS[DuckDNS]
     DNS --> NGINX[Nginx + HTTPS]
     NGINX --> WEB[web-ui]
 
