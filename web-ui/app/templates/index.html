@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microservices E-Commerce</title>
+    <title>Microservices Store</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -29,11 +29,11 @@
     <section class="hero">
         <div class="container hero-inner">
             <div class="hero-copy">
-                <span class="eyebrow">Projet DevOps • Microservices • AWS</span>
-                <h2>Une vitrine e-commerce simple, propre et déployée en production.</h2>
+                <span class="eyebrow">Boutique en ligne</span>
+                <h2>Une expérience simple, claire et agréable.</h2>
                 <p>
-                    Front Flask, services FastAPI, plusieurs bases de données, Docker, CI/CD,
-                    Nginx et HTTPS. Une architecture légère, pensée pour être claire et démontrable.
+                    Parcourez nos produits, ajoutez-les à votre panier et finalisez votre commande
+                    en quelques clics dans une interface moderne et fluide.
                 </p>
                 <div class="hero-cta">
                     <a href="#catalogue" class="btn btn-dark">Voir les produits</a>
@@ -44,20 +44,21 @@
             <div class="hero-card">
                 <div class="hero-card-top">
                     <span class="badge">En ligne</span>
-                    <span class="badge subtle">HTTPS</span>
+                    <span class="badge subtle">Sécurisé</span>
                 </div>
+
                 <div class="hero-metrics">
                     <div>
-                        <strong>5</strong>
-                        <span>microservices</span>
+                        <strong>Navigation rapide</strong>
+                        <span>Une interface fluide et responsive</span>
                     </div>
                     <div>
-                        <strong>CI/CD</strong>
-                        <span>GitHub Actions</span>
+                        <strong>Commande simplifiée</strong>
+                        <span>Ajout au panier et validation en quelques étapes</span>
                     </div>
                     <div>
-                        <strong>AWS</strong>
-                        <span>EC2 + Terraform</span>
+                        <strong>Catalogue moderne</strong>
+                        <span>Présentation claire des produits</span>
                     </div>
                 </div>
             </div>
@@ -83,14 +84,34 @@
                     <span class="section-kicker">Catalogue</span>
                     <h3>Produits disponibles</h3>
                 </div>
-                <p>Une interface volontairement simple, avec une présentation plus premium.</p>
+                <p>Retrouvez une sélection d’accessoires pratiques pour votre setup.</p>
             </div>
 
             <div class="products-grid">
                 {% for product in products %}
                 <article class="product-card">
-                    <div class="product-visual">
-                        <div class="product-icon">{{ product.name[0] }}</div>
+                    <div class="product-visual product-image-shell">
+                        {% if product.name == "Clavier mécanique" %}
+                            <img
+                                src="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=900&q=80"
+                                alt="Clavier mécanique"
+                                class="product-image"
+                            >
+                        {% elif product.name == "Souris gaming" %}
+                            <img
+                                src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80"
+                                alt="Souris gaming"
+                                class="product-image"
+                            >
+                        {% elif product.name == "Casque audio" %}
+                            <img
+                                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80"
+                                alt="Casque audio"
+                                class="product-image"
+                            >
+                        {% else %}
+                            <div class="product-icon">{{ product.name[0] }}</div>
+                        {% endif %}
                     </div>
 
                     <div class="product-body">
