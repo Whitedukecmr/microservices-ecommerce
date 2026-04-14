@@ -27,10 +27,12 @@ flowchart TB
     CHECKOUT --> ORDERS[orders-service]
 
     CATALOG --> MYSQL[(MySQL)]
-    CART --> DYNAMO[(DynamoDB Local)]
+    CART --> DYNAMO[(DynamoDB)]
     CHECKOUT --> REDIS[(Redis)]
     ORDERS --> POSTGRES[(PostgreSQL)]
-    ORDERS --> RABBITMQ[(RabbitMQ)]
+    ORDERS --> MQ[(RabbitMQ)]
+
+---
 
 L’application est composée de plusieurs services :
 
