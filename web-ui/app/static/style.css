@@ -591,4 +591,18 @@ body {
         object-fit: cover;
         display: block;
     }
+    .product-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.1),
+            rgba(0,0,0,0.5)
+        );
+    }
+    .product-card:hover {
+        transform: translateY(-4px);
+        transition: 0.2s ease;
+    }
 }
