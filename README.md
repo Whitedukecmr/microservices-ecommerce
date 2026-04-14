@@ -2,6 +2,8 @@
 
 Projet personnel autour d’une application e-commerce basée sur une architecture microservices, déployée sur AWS avec une approche DevOps complète.
 
+⚠️ Ce projet est un environnement de démonstration visant à illustrer une architecture microservices et un déploiement DevOps. Certaines logiques métier (authentification, gestion stricte du stock) ne sont pas implémentées.
+
 ---
 
 ## 🚀 Démo
