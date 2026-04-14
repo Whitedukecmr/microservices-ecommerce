@@ -10,9 +10,27 @@ Projet personnel autour d’une application e-commerce basée sur une architectu
 
 ---
 
-## 🧱 Architecture
+## 🏗 Architecture
 
-![Architecture](architecture.png)
+```mermaid
+flowchart TB
+    U[Utilisateur] --> DNS[DuckDNS]
+    DNS --> NGINX[Nginx + HTTPS]
+    NGINX --> WEB[web-ui]
+
+    WEB --> CATALOG[catalog-service]
+    WEB --> CART[cart-service]
+    WEB --> CHECKOUT[checkout-service]
+
+    CHECKOUT --> CATALOG
+    CHECKOUT --> CART
+    CHECKOUT --> ORDERS[orders-service]
+
+    CATALOG --> MYSQL[(MySQL)]
+    CART --> DYNAMO[(DynamoDB Local)]
+    CHECKOUT --> REDIS[(Redis)]
+    ORDERS --> POSTGRES[(PostgreSQL)]
+    ORDERS --> RABBITMQ[(RabbitMQ)]
 
 L’application est composée de plusieurs services :
 
