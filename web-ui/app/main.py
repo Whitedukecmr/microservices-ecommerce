@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, session
 import os
 import requests
+import uuid
 
 app = Flask(__name__)
 app.secret_key = "microservices-ecommerce-secret-key"
@@ -9,23 +10,30 @@ CATALOG_SERVICE_URL = os.getenv("CATALOG_SERVICE_URL", "http://catalog-service:8
 CART_SERVICE_URL = os.getenv("CART_SERVICE_URL", "http://cart-service:8002")
 CHECKOUT_SERVICE_URL = os.getenv("CHECKOUT_SERVICE_URL", "http://checkout-service:8003")
 
-USER_ID = "user1"
+
+def get_user_id() -> str:
+    if "user_id" not in session:
+        session["user_id"] = str(uuid.uuid4())
+    return session["user_id"]
 
 
 def get_products():
     try:
         response = requests.get(f"{CATALOG_SERVICE_URL}/products", timeout=5)
+        response.raise_for_status()
         return response.json()
     except Exception:
         return []
 
 
 def get_cart():
+    user_id = get_user_id()
     try:
-        response = requests.get(f"{CART_SERVICE_URL}/cart/{USER_ID}", timeout=5)
+        response = requests.get(f"{CART_SERVICE_URL}/cart/{user_id}", timeout=5)
+        response.raise_for_status()
         return response.json()
     except Exception:
-        return {"userId": USER_ID, "items": []}
+        return {"userId": user_id, "items": []}
 
 
 @app.route("/")
@@ -66,6 +74,7 @@ def index():
 
 @app.route("/add-to-cart", methods=["POST"])
 def add_to_cart():
+    user_id = get_user_id()
     product_id = int(request.form["product_id"])
     quantity = int(request.form.get("quantity", 1))
 
@@ -80,7 +89,7 @@ def add_to_cart():
 
     try:
         response = requests.post(
-            f"{CART_SERVICE_URL}/cart/{USER_ID}/items",
+            f"{CART_SERVICE_URL}/cart/{user_id}/items",
             json=payload,
             timeout=5
         )
@@ -97,11 +106,12 @@ def add_to_cart():
 
 @app.route("/remove-from-cart", methods=["POST"])
 def remove_from_cart():
+    user_id = get_user_id()
     product_id = int(request.form["product_id"])
 
     try:
         response = requests.delete(
-            f"{CART_SERVICE_URL}/cart/{USER_ID}/items/{product_id}",
+            f"{CART_SERVICE_URL}/cart/{user_id}/items/{product_id}",
             timeout=5
         )
 
@@ -117,9 +127,11 @@ def remove_from_cart():
 
 @app.route("/checkout", methods=["POST"])
 def checkout():
+    user_id = get_user_id()
+
     try:
         response = requests.post(
-            f"{CHECKOUT_SERVICE_URL}/checkout/{USER_ID}",
+            f"{CHECKOUT_SERVICE_URL}/checkout/{user_id}",
             timeout=10
         )
 
