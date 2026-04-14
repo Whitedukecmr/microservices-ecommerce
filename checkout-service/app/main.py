@@ -13,8 +13,12 @@ ORDERS_SERVICE_URL = os.getenv("ORDERS_SERVICE_URL", "http://orders-service:8004
 
 @app.post("/checkout/{user_id}")
 def checkout(user_id: str):
-    cart_response = requests.get(f"{CART_SERVICE_URL}/cart/{user_id}", timeout=5)
-    cart = cart_response.json()
+    try:
+        cart_response = requests.get(f"{CART_SERVICE_URL}/cart/{user_id}", timeout=5)
+        cart_response.raise_for_status()
+        cart = cart_response.json()
+    except Exception:
+        raise HTTPException(status_code=500, detail="Unable to retrieve cart")
 
     if not cart.get("items"):
         raise HTTPException(status_code=400, detail="Cart is empty")
@@ -23,11 +27,18 @@ def checkout(user_id: str):
     total = 0.0
 
     for item in cart["items"]:
-        product_response = requests.get(
-            f"{CATALOG_SERVICE_URL}/products/{item['productId']}",
-            timeout=5
-        )
-        product = product_response.json()
+        try:
+            product_response = requests.get(
+                f"{CATALOG_SERVICE_URL}/products/{item['productId']}",
+                timeout=5
+            )
+            product_response.raise_for_status()
+            product = product_response.json()
+        except Exception:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Unable to retrieve product {item['productId']}"
+            )
 
         line_total = product["price"] * item["quantity"]
 
@@ -38,6 +49,30 @@ def checkout(user_id: str):
         })
         total += line_total
 
+    # Vérification / réservation du stock
+    for item in detailed_items:
+        try:
+            reserve_response = requests.post(
+                f"{CATALOG_SERVICE_URL}/products/{item['productId']}/reserve",
+                json={"quantity": item["quantity"]},
+                timeout=5
+            )
+
+            if reserve_response.status_code != 200:
+                try:
+                    detail = reserve_response.json().get("detail", "Stock reservation failed")
+                except Exception:
+                    detail = "Stock reservation failed"
+                raise HTTPException(status_code=409, detail=detail)
+
+        except HTTPException:
+            raise
+        except Exception:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Unable to reserve stock for product {item['productId']}"
+            )
+
     summary = {
         "userId": user_id,
         "items": detailed_items,
@@ -46,16 +81,19 @@ def checkout(user_id: str):
 
     redis_client.set(f"checkout:{user_id}", json.dumps(summary))
 
-    order_response = requests.post(
-        f"{ORDERS_SERVICE_URL}/orders",
-        json=summary,
-        timeout=5
-    )
+    try:
+        order_response = requests.post(
+            f"{ORDERS_SERVICE_URL}/orders",
+            json=summary,
+            timeout=5
+        )
+        order_response.raise_for_status()
+    except Exception:
+        raise HTTPException(status_code=500, detail="Unable to create order")
 
-    if order_response.status_code in [200, 201]:
-        try:
-            requests.delete(f"{CART_SERVICE_URL}/cart/{user_id}", timeout=5)
-        except Exception as e:
-            print(f"[checkout-service] Failed to clear cart: {e}")
+    try:
+        requests.delete(f"{CART_SERVICE_URL}/cart/{user_id}", timeout=5)
+    except Exception as e:
+        print(f"[checkout-service] Failed to clear cart: {e}")
 
     return order_response.json()

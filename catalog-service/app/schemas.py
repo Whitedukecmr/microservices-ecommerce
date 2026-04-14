@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class ProductResponse(BaseModel):
     id: int
     name: str
@@ -9,3 +10,7 @@ class ProductResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class StockReservationRequest(BaseModel):
+    quantity: int

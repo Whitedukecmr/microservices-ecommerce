@@ -5,7 +5,7 @@ import time
 
 from .database import Base, engine, SessionLocal
 from .models import Product
-from .schemas import ProductResponse
+from .schemas import ProductResponse, StockReservationRequest
 from .seed import seed_products
 
 app = FastAPI(title="Catalog Service")
@@ -52,3 +52,34 @@ def get_product(product_id: int, db: Session = Depends(get_db)):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product
+
+
+@app.post("/products/{product_id}/reserve")
+def reserve_stock(
+    product_id: int,
+    payload: StockReservationRequest,
+    db: Session = Depends(get_db)
+):
+    if payload.quantity <= 0:
+        raise HTTPException(status_code=400, detail="Quantity must be greater than 0")
+
+    product = db.query(Product).filter(Product.id == product_id).first()
+
+    if not product:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    if product.stock < payload.quantity:
+        raise HTTPException(
+            status_code=409,
+            detail=f"Stock insuffisant pour {product.name}. Disponible: {product.stock}, demandé: {payload.quantity}"
+        )
+
+    product.stock -= payload.quantity
+    db.commit()
+    db.refresh(product)
+
+    return {
+        "id": product.id,
+        "name": product.name,
+        "remainingStock": product.stock
+    }
