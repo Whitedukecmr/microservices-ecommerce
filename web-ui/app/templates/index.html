@@ -7,75 +7,151 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1>Microservices E-Commerce</h1>
-            <p>Catalogue, panier et commande</p>
+    <header class="site-header">
+        <div class="container header-inner">
+            <div class="brand">
+                <div class="brand-mark">M</div>
+                <div>
+                    <h1>Microservices Store</h1>
+                    <p>Catalogue, panier et commande</p>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-shell">
+                    <input type="text" placeholder="Rechercher un produit..." aria-label="Recherche">
+                </div>
+                <a href="#catalogue" class="ghost-link">Catalogue</a>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-container">
-                    {% for category, message in messages %}
-                        <div class="flash-message flash-{{ category }}">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
+    <section class="hero">
+        <div class="container hero-inner">
+            <div class="hero-copy">
+                <span class="eyebrow">Projet DevOps • Microservices • AWS</span>
+                <h2>Une vitrine e-commerce simple, propre et déployée en production.</h2>
+                <p>
+                    Front Flask, services FastAPI, plusieurs bases de données, Docker, CI/CD,
+                    Nginx et HTTPS. Une architecture légère, pensée pour être claire et démontrable.
+                </p>
+                <div class="hero-cta">
+                    <a href="#catalogue" class="btn btn-dark">Voir les produits</a>
+                    <a href="#panier" class="btn btn-light">Voir le panier</a>
                 </div>
-            {% endif %}
-        {% endwith %}
+            </div>
 
-        <div class="layout">
-            <section class="products-section">
-                <h2>Catalogue produits</h2>
+            <div class="hero-card">
+                <div class="hero-card-top">
+                    <span class="badge">En ligne</span>
+                    <span class="badge subtle">HTTPS</span>
+                </div>
+                <div class="hero-metrics">
+                    <div>
+                        <strong>5</strong>
+                        <span>microservices</span>
+                    </div>
+                    <div>
+                        <strong>CI/CD</strong>
+                        <span>GitHub Actions</span>
+                    </div>
+                    <div>
+                        <strong>AWS</strong>
+                        <span>EC2 + Terraform</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="products-grid">
-                    {% for product in products %}
-                    <div class="product-card">
-                        <div class="product-content">
-                            <h3>{{ product.name }}</h3>
+    <main class="container main-layout">
+        <section class="catalog-section" id="catalogue">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-container">
+                        {% for category, message in messages %}
+                            <div class="flash-message flash-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <div class="section-heading">
+                <div>
+                    <span class="section-kicker">Catalogue</span>
+                    <h3>Produits disponibles</h3>
+                </div>
+                <p>Une interface volontairement simple, avec une présentation plus premium.</p>
+            </div>
+
+            <div class="products-grid">
+                {% for product in products %}
+                <article class="product-card">
+                    <div class="product-visual">
+                        <div class="product-icon">{{ product.name[0] }}</div>
+                    </div>
+
+                    <div class="product-body">
+                        <div class="product-meta">
+                            <h4>{{ product.name }}</h4>
                             <p class="description">
                                 {{ product.description if product.description else "Produit disponible" }}
                             </p>
-                            <p class="price">{{ product.price }} €</p>
-                            <p class="stock">Stock : {{ product.stock }}</p>
                         </div>
 
-                        <form method="POST" action="/add-to-cart" class="product-form">
-                            <input type="hidden" name="product_id" value="{{ product.id }}">
-                            <input type="number" name="quantity" value="1" min="1" class="quantity-input">
-                            <button type="submit" class="btn btn-primary">Ajouter au panier</button>
-                        </form>
-                    </div>
-                    {% endfor %}
-                </div>
-            </section>
+                        <div class="product-bottom">
+                            <div class="price-row">
+                                <span class="price">{{ product.price }} €</span>
+                                <span class="stock">Stock : {{ product.stock }}</span>
+                            </div>
 
-            <aside class="cart-section">
-                <h2>Panier</h2>
+                            <form method="POST" action="/add-to-cart" class="product-form">
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+                                <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                            </form>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <aside class="cart-panel" id="panier">
+            <div class="cart-card">
+                <div class="cart-header">
+                    <div>
+                        <span class="section-kicker">Panier</span>
+                        <h3>Votre sélection</h3>
+                    </div>
+                </div>
 
                 {% if cart["items"] and cart["items"]|length > 0 %}
                     <div class="cart-list">
                         {% for item in cart["items"] %}
                         <div class="cart-item">
-                            <div>
+                            <div class="cart-item-main">
                                 <p class="cart-item-title">{{ item.name }}</p>
                                 <p class="cart-item-subtitle">{{ item.quantity }} x {{ item.price }} €</p>
-                                <p><strong>{{ item.lineTotal }} €</strong></p>
                             </div>
-
-                            <form method="POST" action="/remove-from-cart">
-                                <input type="hidden" name="product_id" value="{{ item.productId }}">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                            </form>
+                            <div class="cart-item-side">
+                                <strong>{{ item.lineTotal }} €</strong>
+                                <form method="POST" action="/remove-from-cart">
+                                    <input type="hidden" name="product_id" value="{{ item.productId }}">
+                                    <button type="submit" class="remove-link">Supprimer</button>
+                                </form>
+                            </div>
                         </div>
                         {% endfor %}
                     </div>
 
                     <div class="cart-summary">
-                        <p><strong>Total estimé :</strong> {{ cart_total }} €</p>
+                        <div class="summary-line">
+                            <span>Total estimé</span>
+                            <strong>{{ cart_total }} €</strong>
+                        </div>
                     </div>
 
                     <form method="POST" action="/checkout">
@@ -83,11 +159,13 @@
                     </form>
                 {% else %}
                     <div class="empty-cart">
+                        <div class="empty-icon">🛍️</div>
                         <p>Votre panier est vide.</p>
+                        <span>Ajoutez un produit pour commencer.</span>
                     </div>
                 {% endif %}
-            </aside>
-        </div>
+            </div>
+        </aside>
     </main>
 
     <script src="{{ url_for('static', filename='app.js') }}"></script>
