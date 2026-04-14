@@ -31,8 +31,8 @@ flowchart TB
     CHECKOUT --> REDIS[(Redis)]
     ORDERS --> POSTGRES[(PostgreSQL)]
     ORDERS --> MQ[(RabbitMQ)]
+```
 
----
 
 L’application est composée de plusieurs services :
 
