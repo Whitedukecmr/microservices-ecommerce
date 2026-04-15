@@ -88,49 +88,40 @@
                     <p>Retrouvez une sélection d’accessoires pratiques pour votre setup.</p>
                 </div>
 
+                {% set product_images = {
+                    "Clavier mécanique": "images/products/clavier-mecanique.jpg",
+                    "Souris gaming": "images/products/souris-gaming.jpg",
+                    "Casque audio": "images/products/casque-audio.jpg",
+                    "Écran 27 pouces": "images/products/ecran-27-pouces.jpg",
+                    "Tapis de souris XL": "images/products/tapis-souris-xl.jpg",
+                    "Microphone USB": "images/products/microphone-usb.jpg",
+                    "Webcam HD": "images/products/webcam-hd.jpg",
+                    "Chaise gaming": "images/products/chaise-gaming.jpg",
+                    "Bureau assis-debout": "images/products/bureau-assis-debout.jpg",
+                    "Support écran": "images/products/support-ecran.jpg",
+                    "Enceintes de bureau": "images/products/enceintes-bureau.jpg",
+                    "Hub USB-C": "images/products/hub-usbc.jpg",
+                    "Lampe LED bureau": "images/products/lampe-led-bureau.jpg",
+                    "Station d’accueil": "images/products/station-accueil.jpg",
+                    "SSD externe 1 To": "images/products/ssd-externe-1to.jpg",
+                    "Clé Wi-Fi": "images/products/cle-wifi.jpg",
+                    "Support casque": "images/products/support-casque.jpg",
+                    "Repose-poignets": "images/products/repose-poignets.jpg",
+                    "Clavier compact 75%": "images/products/clavier-compact-75.jpg",
+                    "Souris sans fil": "images/products/souris-sans-fil.jpg"
+                } %}
+
                 <div class="products-grid">
                     {% for product in products %}
                     <article class="product-card">
                         <div class="product-visual">
-                            {% if product.name == "Clavier mécanique" %}
-                                <img
-                                    src="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=900&q=80"
-                                    alt="Clavier mécanique"
-                                    class="product-image"
-                                >
-                            {% elif product.name == "Souris gaming" %}
-                                <img
-                                    src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80"
-                                    alt="Souris gaming"
-                                    class="product-image"
-                                >
-                            {% elif product.name == "Casque audio" %}
-                                <img
-                                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80"
-                                    alt="Casque audio"
-                                    class="product-image"
-                                >
-                            {% elif product.name == "Écran 27 pouces" %}
-                                <img
-                                    src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80"
-                                    alt="Écran 27 pouces"
-                                    class="product-image"
-                                >
-                            {% elif product.name == "Microphone USB" %}
-                                <img
-                                    src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80"
-                                    alt="Microphone USB"
-                                    class="product-image"
-                                >
-                            {% elif product.name == "Webcam HD" %}
-                                <img
-                                    src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=900&q=80"
-                                    alt="Webcam HD"
-                                    class="product-image"
-                                >
-                            {% else %}
-                                <div class="product-fallback">{{ product.name[0] }}</div>
-                            {% endif %}
+                            {% set image_path = product_images.get(product.name, "images/products/default-product.jpg") %}
+                            <img
+                                src="{{ url_for('static', filename=image_path) }}"
+                                alt="{{ product.name }}"
+                                class="product-image"
+                                loading="lazy"
+                            >
                             <div class="product-overlay"></div>
                         </div>
 
@@ -173,9 +164,10 @@
                     <article class="discover-card">
                         <div class="discover-image-shell">
                             <img
-                                src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80"
+                                src="{{ url_for('static', filename='images/discover/setup-guide.jpg') }}"
                                 alt="Guide setup bureau"
                                 class="discover-image"
+                                loading="lazy"
                             >
                             <span class="discover-badge">Guide</span>
                         </div>
@@ -189,9 +181,10 @@
                     <article class="discover-card">
                         <div class="discover-image-shell">
                             <img
-                                src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=900&q=80"
+                                src="{{ url_for('static', filename='images/discover/accessoires-bureau.jpg') }}"
                                 alt="Accessoires de bureau"
                                 class="discover-image"
+                                loading="lazy"
                             >
                             <span class="discover-badge">Accessoires</span>
                         </div>
@@ -205,9 +198,10 @@
                     <article class="discover-card">
                         <div class="discover-image-shell">
                             <img
-                                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80"
+                                src="{{ url_for('static', filename='images/discover/productivite.jpg') }}"
                                 alt="Productivité"
                                 class="discover-image"
+                                loading="lazy"
                             >
                             <span class="discover-badge">Productivité</span>
                         </div>
@@ -221,9 +215,10 @@
                     <article class="discover-card">
                         <div class="discover-image-shell">
                             <img
-                                src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80"
+                                src="{{ url_for('static', filename='images/discover/setup-gaming.jpg') }}"
                                 alt="Setup gaming"
                                 class="discover-image"
+                                loading="lazy"
                             >
                             <span class="discover-badge">Setup</span>
                         </div>
