@@ -18,10 +18,10 @@ def checkout(user_id: str):
         cart_response.raise_for_status()
         cart = cart_response.json()
     except Exception:
-        raise HTTPException(status_code=500, detail="Unable to retrieve cart")
+        raise HTTPException(status_code=500, detail="Impossible de récupérer le panier.")
 
     if not cart.get("items"):
-        raise HTTPException(status_code=400, detail="Cart is empty")
+        raise HTTPException(status_code=400, detail="Le panier est vide.")
 
     detailed_items = []
     total = 0.0
@@ -37,7 +37,7 @@ def checkout(user_id: str):
         except Exception:
             raise HTTPException(
                 status_code=500,
-                detail=f"Unable to retrieve product {item['productId']}"
+                detail=f"Impossible de récupérer le produit {item['productId']}."
             )
 
         line_total = product["price"] * item["quantity"]
@@ -49,7 +49,6 @@ def checkout(user_id: str):
         })
         total += line_total
 
-    # Vérification / réservation du stock
     for item in detailed_items:
         try:
             reserve_response = requests.post(
@@ -60,9 +59,9 @@ def checkout(user_id: str):
 
             if reserve_response.status_code != 200:
                 try:
-                    detail = reserve_response.json().get("detail", "Stock reservation failed")
+                    detail = reserve_response.json().get("detail", "Stock insuffisant.")
                 except Exception:
-                    detail = "Stock reservation failed"
+                    detail = "Stock insuffisant."
                 raise HTTPException(status_code=409, detail=detail)
 
         except HTTPException:
@@ -70,7 +69,7 @@ def checkout(user_id: str):
         except Exception:
             raise HTTPException(
                 status_code=500,
-                detail=f"Unable to reserve stock for product {item['productId']}"
+                detail=f"Impossible de réserver le stock pour le produit {item['productId']}."
             )
 
     summary = {
@@ -89,7 +88,7 @@ def checkout(user_id: str):
         )
         order_response.raise_for_status()
     except Exception:
-        raise HTTPException(status_code=500, detail="Unable to create order")
+        raise HTTPException(status_code=500, detail="Impossible de créer la commande.")
 
     try:
         requests.delete(f"{CART_SERVICE_URL}/cart/{user_id}", timeout=5)
