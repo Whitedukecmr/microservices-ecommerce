@@ -691,199 +691,436 @@ body {
         height: 180px;
     }
     .site-footer {
-        margin-top: 64px;
-        padding: 56px 0 28px;
-        background: #f3f4f6;
-        border-top: 1px solid var(--line);
-    }
-    
+    margin-top: 64px;
+    padding: 56px 0 28px;
+    background: #f3f4f6;
+    border-top: 1px solid var(--line);
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 56px;
+    align-items: start;
+}
+
+.footer-newsletter h4,
+.footer-column h5 {
+    margin: 0 0 18px;
+    color: var(--text);
+}
+
+.footer-newsletter h4 {
+    font-size: 28px;
+    letter-spacing: -0.03em;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.newsletter-form input {
+    flex: 1;
+    min-width: 240px;
+    height: 48px;
+    border: 1px solid #cfd8e3;
+    border-radius: 12px;
+    padding: 0 16px;
+    font-size: 15px;
+    background: white;
+    outline: none;
+}
+
+.newsletter-form input:focus {
+    border-color: #b6c2d2;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+.newsletter-form button {
+    height: 48px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 999px;
+    background: #111827;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.18s ease;
+}
+
+.newsletter-form button:hover {
+    opacity: 0.94;
+}
+
+.footer-note {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+    max-width: 560px;
+}
+
+.payment-section {
+    margin-top: 18px;
+}
+
+.payment-title {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.payment-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.payment-badges span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 12px;
+    border: 1px solid #cfd8e3;
+    border-radius: 10px;
+    background: white;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+    gap: 28px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-column h5 {
+    font-size: 16px;
+    letter-spacing: -0.02em;
+}
+
+.footer-column a {
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.footer-column a:hover {
+    color: var(--primary);
+}
+
+.footer-bottom {
+    margin-top: 36px;
+    padding-top: 18px;
+    border-top: 1px solid #dbe2ea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.footer-bottom-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-bottom-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.footer-bottom-links a:hover {
+    color: var(--text);
+}
+
+@media (max-width: 1040px) {
     .footer-inner {
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 56px;
-        align-items: start;
+        grid-template-columns: 1fr;
+        gap: 36px;
     }
-    
-    .footer-newsletter h4,
-    .footer-column h5 {
-        margin: 0 0 18px;
-        color: var(--text);
-    }
-    
-    .footer-newsletter h4 {
-        font-size: 28px;
-        letter-spacing: -0.03em;
-    }
-    
-    .newsletter-form {
-        display: flex;
-        gap: 14px;
-        margin-bottom: 14px;
-        flex-wrap: wrap;
-    }
-    
-    .newsletter-form input {
-        flex: 1;
-        min-width: 240px;
-        height: 48px;
-        border: 1px solid #cfd8e3;
-        border-radius: 12px;
-        padding: 0 16px;
-        font-size: 15px;
-        background: white;
-        outline: none;
-    }
-    
-    .newsletter-form input:focus {
-        border-color: #b6c2d2;
-        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
-    }
-    
-    .newsletter-form button {
-        height: 48px;
-        padding: 0 22px;
-        border: none;
-        border-radius: 999px;
-        background: #111827;
-        color: white;
-        font-weight: 700;
-        cursor: pointer;
-        transition: 0.18s ease;
-    }
-    
-    .newsletter-form button:hover {
-        opacity: 0.94;
-    }
-    
-    .footer-note {
-        margin: 0 0 22px;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.6;
-        max-width: 560px;
-    }
-    
-    .payment-section {
-        margin-top: 18px;
-    }
-    
-    .payment-title {
-        display: inline-block;
-        margin-bottom: 12px;
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--text);
-    }
-    
-    .payment-badges {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .payment-badges span {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 34px;
-        padding: 0 12px;
-        border: 1px solid #cfd8e3;
-        border-radius: 10px;
-        background: white;
-        font-size: 13px;
-        font-weight: 700;
-        color: var(--text);
-    }
-    
+
     .footer-links {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(140px, 1fr));
-        gap: 28px;
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
     }
-    
-    .footer-column {
-        display: flex;
+}
+
+@media (max-width: 720px) {
+    .site-footer {
+        padding: 44px 0 24px;
+    }
+
+    .footer-links {
+        grid-template-columns: 1fr;
+    }
+
+    .newsletter-form {
         flex-direction: column;
-        gap: 12px;
+        align-items: stretch;
     }
-    
-    .footer-column h5 {
-        font-size: 16px;
-        letter-spacing: -0.02em;
+
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100%;
     }
-    
-    .footer-column a {
-        text-decoration: none;
-        color: var(--text);
-        font-size: 14px;
-        line-height: 1.5;
+}
+
+.site-footer {
+    margin-top: 72px;
+    padding: 64px 0 28px;
+    background: linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%);
+    border-top: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.footer-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: minmax(320px, 1.15fr) minmax(0, 1fr);
+    gap: 56px;
+    align-items: start;
+}
+
+.footer-brand-block {
+    max-width: 560px;
+}
+
+.footer-eyebrow {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: var(--primary);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.footer-brand-block h4 {
+    margin: 0 0 14px;
+    font-size: clamp(26px, 3vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    max-width: 14ch;
+}
+
+.footer-brand-block p {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 52ch;
+}
+
+.footer-newsletter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.footer-newsletter input {
+    flex: 1;
+    min-width: 240px;
+    height: 50px;
+    border-radius: 14px;
+    border: 1px solid #d7dee8;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0 16px;
+    font-size: 15px;
+    outline: none;
+}
+
+.footer-newsletter input:focus {
+    border-color: #c7d2e0;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+.footer-newsletter button {
+    height: 50px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 999px;
+    background: #111827;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.footer-newsletter button:hover {
+    opacity: 0.94;
+    transform: translateY(-1px);
+}
+
+.footer-links-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(120px, 1fr));
+    gap: 24px;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-column h5 {
+    margin: 0 0 6px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text);
+}
+
+.footer-column a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.5;
+    transition: color 0.18s ease;
+}
+
+.footer-column a:hover {
+    color: var(--text);
+}
+
+.footer-middle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(226, 232, 240, 0.9);
+    flex-wrap: wrap;
+}
+
+.footer-label {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.footer-payments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.footer-payments span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 0 12px;
+    border-radius: 10px;
+    border: 1px solid #d8e0ea;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(226, 232, 240, 0.9);
+    flex-wrap: wrap;
+}
+
+.footer-bottom p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.footer-bottom-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.footer-bottom-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.18s ease;
+}
+
+.footer-bottom-links a:hover {
+    color: var(--text);
+}
+
+@media (max-width: 1040px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 36px;
     }
-    
-    .footer-column a:hover {
-        color: var(--primary);
+
+    .footer-links-grid {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
     }
-    
+}
+
+@media (max-width: 720px) {
+    .site-footer {
+        margin-top: 56px;
+        padding: 48px 0 24px;
+    }
+
+    .footer-brand-block h4 {
+        max-width: none;
+    }
+
+    .footer-newsletter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .footer-newsletter input,
+    .footer-newsletter button {
+        width: 100%;
+    }
+
+    .footer-links-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-middle,
     .footer-bottom {
-        margin-top: 36px;
-        padding-top: 18px;
-        border-top: 1px solid #dbe2ea;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 18px;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: flex-start;
     }
-    
-    .footer-bottom p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 13px;
-    }
-    
-    .footer-bottom-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-    }
-    
-    .footer-bottom-links a {
-        color: var(--muted);
-        text-decoration: none;
-        font-size: 13px;
-    }
-    
-    .footer-bottom-links a:hover {
-        color: var(--text);
-    }
-    
-    @media (max-width: 1040px) {
-        .footer-inner {
-            grid-template-columns: 1fr;
-            gap: 36px;
-        }
-    
-        .footer-links {
-            grid-template-columns: repeat(2, minmax(140px, 1fr));
-        }
-    }
-    
-    @media (max-width: 720px) {
-        .site-footer {
-            padding: 44px 0 24px;
-        }
-    
-        .footer-links {
-            grid-template-columns: 1fr;
-        }
-    
-        .newsletter-form {
-            flex-direction: column;
-            align-items: stretch;
-        }
-    
-        .newsletter-form input,
-        .newsletter-form button {
-            width: 100%;
-        }
-    }
+}
 }
