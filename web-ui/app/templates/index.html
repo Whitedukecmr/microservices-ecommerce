@@ -11,7 +11,7 @@
         <div class="container header-inner">
             <div class="brand">
                 <div class="brand-mark">M</div>
-                <div>
+                <div class="brand-copy">
                     <h1>Microservices Store</h1>
                     <p>Catalogue, panier et commande</p>
                 </div>
@@ -28,12 +28,12 @@
 
     <section class="hero">
         <div class="container hero-inner">
-            <div class="hero-copy">
+            <div class="hero-copy card">
                 <span class="eyebrow">Boutique en ligne</span>
                 <h2>Achetez simplement, en quelques clics.</h2>
                 <p>
-                    Une interface rapide pour parcourir, ajouter au panier
-                    et finaliser vos commandes sans friction.
+                    Une interface claire pour parcourir les produits, ajouter au panier
+                    et finaliser une commande sans friction.
                 </p>
                 <div class="hero-cta">
                     <a href="#catalogue" class="btn btn-dark">Voir les produits</a>
@@ -41,22 +41,22 @@
                 </div>
             </div>
 
-            <div class="hero-card">
-                <div class="hero-card-top">
+            <div class="hero-side card">
+                <div class="hero-badges">
                     <span class="badge">En ligne</span>
                     <span class="badge subtle">Sécurisé</span>
                 </div>
 
-                <div class="hero-metrics">
-                    <div>
+                <div class="hero-points">
+                    <div class="hero-point">
                         <strong>Navigation rapide</strong>
                         <span>Une interface fluide et responsive</span>
                     </div>
-                    <div>
+                    <div class="hero-point">
                         <strong>Commande simplifiée</strong>
                         <span>Ajout au panier et validation en quelques étapes</span>
                     </div>
-                    <div>
+                    <div class="hero-point">
                         <strong>Catalogue moderne</strong>
                         <span>Présentation claire des produits</span>
                     </div>
@@ -66,7 +66,7 @@
     </section>
 
     <main class="container main-layout">
-        <section class="catalog-section" id="catalogue">
+        <section class="content-column">
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     <div class="flash-container">
@@ -79,144 +79,166 @@
                 {% endif %}
             {% endwith %}
 
-            <div class="section-heading">
-                <div>
-                    <span class="section-kicker">Catalogue</span>
-                    <h3>Produits disponibles</h3>
+            <section class="catalog-section" id="catalogue">
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">Catalogue</span>
+                        <h3>Produits disponibles</h3>
+                    </div>
+                    <p>Retrouvez une sélection d’accessoires pratiques pour votre setup.</p>
                 </div>
-                <p>Retrouvez une sélection d’accessoires pratiques pour votre setup.</p>
-            </div>
 
-            <div class="products-grid">
-                {% for product in products %}
-                <article class="product-card">
-                    <div class="product-visual product-image-shell">
-                        {% if product.name == "Clavier mécanique" %}
-                            <img
-                                src="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=900&q=80"
-                                alt="Clavier mécanique"
-                                class="product-image"
-                            >
-                        {% elif product.name == "Souris gaming" %}
-                            <img
-                                src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80"
-                                alt="Souris gaming"
-                                class="product-image"
-                            >
-                        {% elif product.name == "Casque audio" %}
-                            <img
-                                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80"
-                                alt="Casque audio"
-                                class="product-image"
-                            >
-                        {% else %}
-                            <div class="product-icon">{{ product.name[0] }}</div>
-                        {% endif %}
-                    </div>
-                    <section class="discover-section">
-                        <div class="section-heading discover-heading">
-                            <div>
-                                <span class="section-kicker">Inspirations</span>
-                                <h3>Ressources similaires à découvrir</h3>
-                            </div>
-                            <p>Quelques éléments complémentaires pour compléter votre setup.</p>
-                        </div>
-                    
-                        <div class="discover-grid">
-                            <article class="discover-card">
-                                <div class="discover-image-shell">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80"
-                                        alt="Guide setup bureau"
-                                        class="discover-image"
-                                    >
-                                    <span class="discover-badge">Guide</span>
-                                </div>
-                                <div class="discover-body">
-                                    <h4>Construire un setup bureau efficace</h4>
-                                    <p>Quelques idées pour améliorer confort, productivité et esthétique.</p>
-                                    <a href="#catalogue" class="discover-link">Voir les produits</a>
-                                </div>
-                            </article>
-                    
-                            <article class="discover-card">
-                                <div class="discover-image-shell">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=900&q=80"
-                                        alt="Accessoires de bureau"
-                                        class="discover-image"
-                                    >
-                                    <span class="discover-badge">Accessoires</span>
-                                </div>
-                                <div class="discover-body">
-                                    <h4>Les indispensables pour un bureau moderne</h4>
-                                    <p>Micro, lampe, support écran, tapis XL et station d’accueil.</p>
-                                    <a href="#catalogue" class="discover-link">Compléter le setup</a>
-                                </div>
-                            </article>
-                    
-                            <article class="discover-card">
-                                <div class="discover-image-shell">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80"
-                                        alt="Setup gaming"
-                                        class="discover-image"
-                                    >
-                                    <span class="discover-badge">Setup</span>
-                                </div>
-                                <div class="discover-body">
-                                    <h4>Créer un espace gaming propre et minimaliste</h4>
-                                    <p>Une sélection cohérente pour allier performance et confort visuel.</p>
-                                    <a href="#catalogue" class="discover-link">Explorer le catalogue</a>
-                                </div>
-                            </article>
-                    
-                            <article class="discover-card">
-                                <div class="discover-image-shell">
-                                    <img
-                                        src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80"
-                                        alt="Productivité"
-                                        class="discover-image"
-                                    >
-                                    <span class="discover-badge">Productivité</span>
-                                </div>
-                                <div class="discover-body">
-                                    <h4>Un environnement de travail plus confortable</h4>
-                                    <p>Des équipements simples pour gagner en confort au quotidien.</p>
-                                    <a href="#catalogue" class="discover-link">Découvrir</a>
-                                </div>
-                            </article>
-                        </div>
-                    </section>
-
-                    <div class="product-body">
-                        <div class="product-meta">
-                            <h4>{{ product.name }}</h4>
-                            <p class="description">
-                                {{ product.description if product.description else "Produit disponible" }}
-                            </p>
+                <div class="products-grid">
+                    {% for product in products %}
+                    <article class="product-card">
+                        <div class="product-visual">
+                            {% if product.name == "Clavier mécanique" %}
+                                <img
+                                    src="https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=900&q=80"
+                                    alt="Clavier mécanique"
+                                    class="product-image"
+                                >
+                            {% elif product.name == "Souris gaming" %}
+                                <img
+                                    src="https://images.unsplash.com/photo-1527814050087-3793815479db?auto=format&fit=crop&w=900&q=80"
+                                    alt="Souris gaming"
+                                    class="product-image"
+                                >
+                            {% elif product.name == "Casque audio" %}
+                                <img
+                                    src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=900&q=80"
+                                    alt="Casque audio"
+                                    class="product-image"
+                                >
+                            {% elif product.name == "Écran 27 pouces" %}
+                                <img
+                                    src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80"
+                                    alt="Écran 27 pouces"
+                                    class="product-image"
+                                >
+                            {% elif product.name == "Microphone USB" %}
+                                <img
+                                    src="https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=900&q=80"
+                                    alt="Microphone USB"
+                                    class="product-image"
+                                >
+                            {% elif product.name == "Webcam HD" %}
+                                <img
+                                    src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=900&q=80"
+                                    alt="Webcam HD"
+                                    class="product-image"
+                                >
+                            {% else %}
+                                <div class="product-fallback">{{ product.name[0] }}</div>
+                            {% endif %}
+                            <div class="product-overlay"></div>
                         </div>
 
-                        <div class="product-bottom">
-                            <div class="price-row">
-                                <span class="price">{{ product.price }} €</span>
-                                <span class="stock">Stock : {{ product.stock }}</span>
+                        <div class="product-body">
+                            <div class="product-meta">
+                                <h4>{{ product.name }}</h4>
+                                <p class="description">
+                                    {{ product.description if product.description else "Produit disponible" }}
+                                </p>
                             </div>
 
-                            <form method="POST" action="/add-to-cart" class="product-form">
-                                <input type="hidden" name="product_id" value="{{ product.id }}">
-                                <input type="number" name="quantity" value="1" min="1" class="quantity-input">
-                                <button type="submit" class="btn btn-primary">Ajouter au panier</button>
-                            </form>
+                            <div class="product-bottom">
+                                <div class="price-row">
+                                    <span class="price">{{ product.price }} €</span>
+                                    <span class="stock">{{ product.stock }} en stock</span>
+                                </div>
+
+                                <form method="POST" action="/add-to-cart" class="product-form">
+                                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                                    <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+                                    <button type="submit" class="btn btn-primary">Ajouter au panier</button>
+                                </form>
+                            </div>
                         </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section class="discover-section">
+                <div class="section-heading discover-heading">
+                    <div>
+                        <span class="section-kicker">Inspirations</span>
+                        <h3>Ressources similaires à découvrir</h3>
                     </div>
-                </article>
-                {% endfor %}
-            </div>
+                    <p>Quelques idées complémentaires pour améliorer votre setup.</p>
+                </div>
+
+                <div class="discover-grid">
+                    <article class="discover-card">
+                        <div class="discover-image-shell">
+                            <img
+                                src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80"
+                                alt="Guide setup bureau"
+                                class="discover-image"
+                            >
+                            <span class="discover-badge">Guide</span>
+                        </div>
+                        <div class="discover-body">
+                            <h4>Construire un setup bureau efficace</h4>
+                            <p>Quelques idées simples pour améliorer confort, productivité et esthétique.</p>
+                            <a href="#catalogue" class="discover-link">Voir les produits</a>
+                        </div>
+                    </article>
+
+                    <article class="discover-card">
+                        <div class="discover-image-shell">
+                            <img
+                                src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=900&q=80"
+                                alt="Accessoires de bureau"
+                                class="discover-image"
+                            >
+                            <span class="discover-badge">Accessoires</span>
+                        </div>
+                        <div class="discover-body">
+                            <h4>Les indispensables pour un bureau moderne</h4>
+                            <p>Support écran, lampe, tapis XL, station d’accueil et autres essentiels.</p>
+                            <a href="#catalogue" class="discover-link">Compléter le setup</a>
+                        </div>
+                    </article>
+
+                    <article class="discover-card">
+                        <div class="discover-image-shell">
+                            <img
+                                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80"
+                                alt="Productivité"
+                                class="discover-image"
+                            >
+                            <span class="discover-badge">Productivité</span>
+                        </div>
+                        <div class="discover-body">
+                            <h4>Un environnement de travail plus confortable</h4>
+                            <p>Des équipements simples pour gagner en confort au quotidien.</p>
+                            <a href="#catalogue" class="discover-link">Découvrir</a>
+                        </div>
+                    </article>
+
+                    <article class="discover-card">
+                        <div class="discover-image-shell">
+                            <img
+                                src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&w=900&q=80"
+                                alt="Setup gaming"
+                                class="discover-image"
+                            >
+                            <span class="discover-badge">Setup</span>
+                        </div>
+                        <div class="discover-body">
+                            <h4>Créer un espace gaming propre et minimaliste</h4>
+                            <p>Une sélection cohérente pour allier performance, confort et style.</p>
+                            <a href="#catalogue" class="discover-link">Explorer le catalogue</a>
+                        </div>
+                    </article>
+                </div>
+            </section>
         </section>
 
         <aside class="cart-panel" id="panier">
-            <div class="cart-card">
+            <div class="cart-card card">
                 <div class="cart-header">
                     <div>
                         <span class="section-kicker">Panier</span>
